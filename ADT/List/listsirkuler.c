@@ -71,7 +71,7 @@ void InsVFirst (List *L, infotype X)
     Next(P) = First(*L);
     First(*L) = P;
     address last = First(*L);
-    while(Next(last) != First(*L)){
+    while(Next(last) != Next(First(*L))){
       last = Next(last);
     }
     Next(last) = First(*L);
@@ -141,7 +141,7 @@ void InsertFirst (List *L, address P)
   Next(P) = First(*L);
   First(*L) = P;
   address last = First(*L);
-  while(Next(last) != First(*L)){
+  while(Next(last) != Next(First(*L))){
     last = Next(last);
   }
   Next(last) = First(*L);
