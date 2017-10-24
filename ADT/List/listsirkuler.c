@@ -142,7 +142,7 @@ void InsertFirst (List *L, address P)
   First(*L) = P;
   address last = First(*L);
   while(Next(last) != First(*L)){
-    last = Next(First(*L));
+    last = Next(last);
   }
   Next(last) = First(*L);
 }
