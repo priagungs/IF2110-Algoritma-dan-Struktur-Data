@@ -68,13 +68,7 @@ void InsVFirst (List *L, infotype X)
 {
   address P = Alokasi(X);
   if(P!=Nil){
-    Next(P) = First(*L);
-    address last = First(*L);
-    while(Next(last) != First(*L)){
-      last = Next(last);
-    }
-    First(*L) = P;
-    Next(last) = First(*L);
+    InsertFirst(L,P);
   }
 }
 void InsVLast (List *L, infotype X)
@@ -85,17 +79,7 @@ void InsVLast (List *L, infotype X)
 {
   address P = Alokasi(X), temp = First(*L);
   if(P!=Nil){
-    if(temp == Nil){
-      Next(P) = First(*L);
-      First(*L) = P;
-    }
-    else{
-      while(Next(temp) != First(*L)){
-        temp = Next(temp);
-      }
-      Next(temp) = P;
-      Next(P) = First(*L);
-    }
+    InsertLast(L,P);
   }
 }
 
