@@ -1,1 +1,1 @@
-# pra-praktikum1-logif
+# Algoritma dan Struktur Data (IF2110)
