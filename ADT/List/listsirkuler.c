@@ -69,11 +69,11 @@ void InsVFirst (List *L, infotype X)
   address P = Alokasi(X);
   if(P!=Nil){
     Next(P) = First(*L);
-    First(*L) = P;
     address last = First(*L);
-    while(Next(last) != Next(First(*L))){
+    while(Next(last) != First(*L)){
       last = Next(last);
     }
+    First(*L) = P;
     Next(last) = First(*L);
   }
 }
@@ -139,11 +139,11 @@ void InsertFirst (List *L, address P)
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 {
   Next(P) = First(*L);
-  First(*L) = P;
   address last = First(*L);
-  while(Next(last) != Next(First(*L))){
+  while(Next(last) != First(*L)){
     last = Next(last);
   }
+  First(*L) = P;
   Next(last) = First(*L);
 }
 
@@ -232,12 +232,19 @@ void DelP (List *L, infotype X)
 /* List mungkin menjadi kosong karena penghapusan */
 {
   address P = Search(*L, X), temp = First(*L), prec = Nil;
-  while(temp != P){
-    prec = temp;
-    temp = Next(temp);
+  if(P != Nil){
+    while(temp != P){
+      prec = temp;
+      temp = Next(temp);
+    }
+    if(prec != Nil){
+      Next(prec) = Next(temp);
+    }
+    else{
+      First(*L) = Nil;
+    }
+    Dealokasi(P);
   }
-  Next(prec) = Next(temp);
-  Dealokasi(P);
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
