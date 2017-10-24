@@ -138,13 +138,8 @@ void InsertFirst (List *L, address P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 {
-  Next(P) = First(*L);
-  address last = First(*L);
-  while(Next(last) != First(*L)){
-    last = Next(last);
-  }
+  InsertLast(L,P);
   First(*L) = P;
-  Next(last) = First(*L);
 }
 
 void InsertLast (List *L, address P)
@@ -153,7 +148,7 @@ void InsertLast (List *L, address P)
 {
   address temp = First(*L);
   if(P!=Nil){
-    if(temp == Nil){
+    if(IsEmpty(*L)){
       First(*L) = P;
       Next(P) = First(*L);
     }
@@ -183,14 +178,13 @@ void DelFirst (List *L, address *P)
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
 {
-  *P = First(*L);
-  First(*L) = Next(First(*L));
-  if(First(*L) != Nil){
-    address last = First(*L);
-    while(Next(last) != First(*L)){
-      last = Next(last);
-    }
-    Next(last) = First(*L);
+  if(Next(First(*L)) == First(*L)){
+    DelLast(L, P);
+  }
+  else {
+    *P = First(*L);
+    First(*L) = Next(*P);
+    Next(*P) = Nil;
   }
 }
 
