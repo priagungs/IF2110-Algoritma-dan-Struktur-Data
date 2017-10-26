@@ -143,11 +143,15 @@ void InsertFirst (List *L, address P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 {
-	Next(P) = First(*L);
-	if(First(*L) != Nil){
-		Prev(First(*L)) = P;
+	if(IsEmpty(*L)){
+		First(*L) = P;
+		Last(*L) = P;
 	}
-	First(*L) = P;
+	else{
+		Next(P) = First(*L);
+		Prev(First(*L)) = P;
+		First(*L) = P;
+	}
 }
 
 void InsertLast (List *L, address P)
@@ -192,7 +196,7 @@ void InsertBefore (List *L, address P, address Succ)
 		First(*L) = P;
 	}
 	else{
-		Next(Prev(Succ)) = P;
+		Next(Prev(P)) = P;
 	}
 }
 
@@ -211,6 +215,8 @@ void DelFirst (List *L, address *P)
 	else{
 		Last(*L) = Nil;
 	}
+	Next(*P) = Nil;
+	Prev(*P) = Nil;
 }
 
 void DelLast (List *L, address *P)
@@ -227,6 +233,8 @@ void DelLast (List *L, address *P)
 	else{
 		First(*L) = Nil;
 	}
+	Next(*P) = Nil;
+	Prev(*P) = Nil;
 }
 
 void DelP (List *L, infotype X)
@@ -236,6 +244,7 @@ void DelP (List *L, infotype X)
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 {
+
 	address P = Search(*L, X);
 	if(P != Nil){
 		if(Next(P) != Nil && Prev(P) != Nil){
@@ -263,6 +272,7 @@ void DelAfter (List *L, address *Pdel, address Prec)
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
 {
+
 	*Pdel = Next(Prec);
 	Next(Prec) = Next(*Pdel);
 	if(*Pdel == Last(*L)){
@@ -271,6 +281,8 @@ void DelAfter (List *L, address *Pdel, address Prec)
 	else{
 		Prev(Next(Prec)) = Prec;
 	}
+	Next(*Pdel) = Nil;
+	Prev(*Pdel) = Nil;
 }
 
 void DelBefore (List *L, address *Pdel, address Succ)
@@ -278,14 +290,17 @@ void DelBefore (List *L, address *Pdel, address Succ)
 /* F.S. Menghapus Prev(Succ): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
 {
+
 	*Pdel = Prev(Succ);
 	Prev(Succ) = Prev(*Pdel);
-	if(*Pdel == First(*L)){
+	if(Prev(Succ) == Nil){
 		First(*L) = Succ;
 	}
 	else{
 		Next(Prev(Succ)) = Succ;
 	}
+	Next(*Pdel) = Nil;
+	Prev(*Pdel) = Nil;
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
